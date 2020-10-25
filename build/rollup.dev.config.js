@@ -1,35 +1,28 @@
 const path = require('path')
 const serve = require('rollup-plugin-serve')
-const html = require('rollup-plugin-bundle-html')
 const baseConf = require('./rollup.base')
 
+const resolveFile = filePath => path.resolve(__dirname, '..', filePath)
 const componentName = process.env.COMPONENT_NAME
 const port = process.env.PORT || 10001
 const componentType = process.env.COMPONENT_TYPE || 'js'
 
 module.exports = {
-  input: path.resolve(__dirname, `../src/${componentName}/index.${componentType}`),
+  input: resolveFile(`src/index.ts`),
   output: [
     {
-      file: path.resolve(
-        __dirname,
-        `../src/${componentName}/dist/index.js`
-      ),
+      file: resolveFile('dist/bundle.umd.js'),
       format: 'umd',
+      name: 'Bundle',
       sourcemap: true,
     }
   ],
   plugins: [
     ...baseConf.plugins,
-    html({
-      template:  path.resolve(__dirname, `../src/${componentName}/example/index.html`),
-      filename: 'index.html',
-      dist: path.resolve(__dirname, `../src/${componentName}/dist`),
-    }),
     serve({
       port,
       open: true,
-      contentBase: path.resolve(__dirname, `../src/${componentName}/dist`),
+      contentBase: [resolveFile('public'), resolveFile('dist')],
       historyApiFallback: true, // Set to true to return index.html instead of 404
       host: 'localhost',
     })

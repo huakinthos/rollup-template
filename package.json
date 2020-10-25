@@ -4,7 +4,7 @@
   "description": "{{ description }}",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rollup -c",
+    "dev": "cross-env NODE_ENV=development rollup -c -w",
     "build": "cross-env NODE_ENV=production rollup -c",
     "test": "rollup src/test.js -o bundle.js -f cjs"
   },

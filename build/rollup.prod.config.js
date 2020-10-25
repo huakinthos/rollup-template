@@ -24,7 +24,7 @@ module.exports = [
         format: 'umd',
         name,
         banner,
-        sourcemap: true,
+        sourcemap: false,
       }
     ],
     plugins: [...baseConf.plugins, terser(), filesize()]
